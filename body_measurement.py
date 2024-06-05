@@ -2,20 +2,17 @@ import cv2
 import numpy as np
 from sklearn.linear_model import LinearRegression
 
-# Data pelatihan (contoh)
 X_train_width = np.array([[50], [60], [70], [80], [90]])
 y_train_width = np.array([45, 54, 63, 72, 81])  # Lebar dalam cm
 X_train_height = np.array([[100], [120], [140], [160], [180]])
 y_train_height = np.array([150, 160, 170, 180, 190])  # Tinggi dalam cm
 
-# Buat model regresi linear untuk lebar dan tinggi
 model_width = LinearRegression()
 model_width.fit(X_train_width, y_train_width)
 
 model_height = LinearRegression()
 model_height.fit(X_train_height, y_train_height)
 
-# Fungsi untuk memprediksi tinggi dan lebar dalam cm berdasarkan piksel
 def predict_dimensions(width_px, height_px):
     width_cm = model_width.predict(np.array([[width_px]]))[0]
     height_cm = model_height.predict(np.array([[height_px]]))[0]

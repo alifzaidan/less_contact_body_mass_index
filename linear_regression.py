@@ -2,10 +2,10 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 
 data = {
-    'height_pixels': [100, 150, 200, 250, 300],
-    'real_height_cm': [150, 170, 190, 210, 230],
-    'width_pixels': [50, 75, 100, 125, 150],
-    'real_width_cm': [70, 80, 90, 100, 110],
+    'height_pixels': [414, 420, 380, 390, 424, 426],
+    'real_height_cm': [150, 156, 145, 147, 161, 166],
+    'width_pixels': [207, 210, 190, 205, 215, 220],
+    'real_width_cm': [38, 40, 37, 36, 40, 43],
 }
 
 df = pd.DataFrame(data)

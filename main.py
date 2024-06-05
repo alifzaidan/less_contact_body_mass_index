@@ -2,12 +2,17 @@ import imt
 import pandas as pd
 import os
 
-# dalam satuan cm
-lebar_depan_sistem = 30
-lebar_samping_sistem = 15
-tinggi_badan_sistem = 165
-tinggi_badan_real = 166
-berat_badan_real = 40
+# lebar_depan_sistem = 37.6
+# lebar_samping_sistem = 33.25 - 17
+# tinggi_badan_sistem = 150.9
+# tinggi_badan_real = 150
+# berat_badan_real = 43
+
+lebar_depan_sistem = 39.8
+lebar_samping_sistem = 35.75 - 17
+tinggi_badan_sistem = 162.71
+tinggi_badan_real = 163
+berat_badan_real = 60
 
 # Menghitung luas area tubuh (BSA)
 bsa = imt.luas_area_tubuh(lebar_depan_sistem, lebar_samping_sistem, tinggi_badan_sistem)
