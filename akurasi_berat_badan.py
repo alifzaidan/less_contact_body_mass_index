@@ -17,14 +17,13 @@ average_error = np.mean(errors)
 accuracy = 100 - average_error
 
 data = {
-    "Data": list(range(1, len(berat_real) + 1)),
-    "Berat Real (kg)": berat_real,
-    "Berat Sistem (kg)": berat_sistem,
-    "Error (%)": errors
+    "Data": list(range(1, len(berat_real) + 1)) + ['Error Rata-Rata (%)', 'Akurasi (100% - Error Rata-rata)'],
+    "Berat Real (kg)": berat_real + [np.nan, np.nan],
+    "Berat Sistem (kg)": berat_sistem + [np.nan, np.nan],
+    "Error (%)": errors.tolist() + [average_error, accuracy]
 }
 
 df = pd.DataFrame(data)
 print(df)
 
-print(f'Error Rata-Rata (%) : {average_error}')
-print(f'Akurasi (100% - Error Rata-rata) : {accuracy}')
+df.to_excel('akurasi_berat_badan.xlsx', index=False)

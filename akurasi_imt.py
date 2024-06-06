@@ -22,17 +22,15 @@ correct_categories = sum([1 for real, system in zip(kategori_real, kategori_sist
 category_accuracy = (correct_categories / len(kategori_real)) * 100
 
 data = {
-    "Data": list(range(1, len(imt_real) + 1)),
-    "IMT Real": imt_real,
-    "Kategori Real": kategori_real,
-    "IMT Sistem": imt_sistem,
-    "Kategori Sistem": kategori_sistem,
-    "Error (%)": imt_errors
+    "Data": list(range(1, len(imt_real) + 1)) + ['Error Rata-Rata (%)', 'Akurasi (100% - Error Rata-rata)', 'Akurasi Kategori'],
+    "IMT Real": imt_real + [np.nan, np.nan, np.nan],
+    "Kategori Real": kategori_real + [np.nan, np.nan, np.nan],
+    "IMT Sistem": imt_sistem + [np.nan, np.nan, np.nan],
+    "Kategori Sistem": kategori_sistem + [np.nan, np.nan, np.nan],
+    "Error (%)": imt_errors.tolist() + [average_error, accuracy, category_accuracy]
 }
 
 df = pd.DataFrame(data)
 print(df)
 
-print(f'Error Rata-Rata (%) : {average_error}')
-print(f'Akurasi (100% - Error Rata-rata) : {accuracy}')
-print(f'Akurasi Kategori: {category_accuracy}')
+df.to_excel('akurasi_imt.xlsx', index=False)

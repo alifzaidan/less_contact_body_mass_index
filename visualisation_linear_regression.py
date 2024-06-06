@@ -1,60 +1,67 @@
 import pandas as pd
+import numpy as np
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
-data = {
-    'height_pixels': [414, 420, 380, 390, 410, 436],
-    'real_height_cm': [150, 152, 145, 147, 151, 160],
-    'width_pixels': [207, 210, 190, 205, 215, 220],
-    'real_width_cm': [38, 40, 37, 36, 40, 43],
-}
+df = pd.read_csv('data_body_measurements.csv')
 
-df = pd.DataFrame(data)
+height_pixels = df['Tinggi Sistem (pixel)'].tolist()
+height_system = df['Tinggi Sistem (cm)'].tolist()
+height_real = df['Tinggi Real (cm)'].tolist()
+front_width_pixels = df['Lebar Depan Sistem (pixel)'].tolist()
+front_width_system = df['Lebar Depan Sistem (cm)'].tolist()
+front_width_real = df['Lebar Depan Real (cm)'].tolist()
+side_width_pixels = df['Lebar Samping Sistem (pixel)'].tolist()
+side_width_system = df['Lebar Samping Sistem (cm)'].tolist()
+side_width_real = df['Lebar Samping Real (cm)'].tolist()
 
-# Regresi linear untuk tinggi badan
-X_height = df[['height_pixels']]
-y_height = df['real_height_cm']
+X_height = np.array(height_pixels).reshape((-1, 1))
+y_height = height_real
 model_height = LinearRegression().fit(X_height, y_height)
 line_height = model_height.predict(X_height)
 
-# Regresi linear untuk lebar
-X_width = df[['width_pixels']]
-y_width = df['real_width_cm']
-model_width = LinearRegression().fit(X_width, y_width)
-line_width = model_width.predict(X_width)
+X_front_width = np.array(front_width_pixels).reshape((-1, 1))
+y_front_width = front_width_real
+model_front_width = LinearRegression().fit(X_front_width, y_front_width)
+line_front_width = model_front_width.predict(X_front_width)
 
-# Menampilkan koefisien dan intercept untuk tinggi badan
-slope_height = model_height.coef_[0]
-intercept_height = model_height.intercept_
-print(f'Persamaan regresi tinggi badan: tinggi(cm) = {slope_height:.2f} * piksel + {intercept_height:.2f}')
+X_side_width = np.array(side_width_pixels).reshape((-1, 1))
+y_side_width = side_width_real
+model_side_width = LinearRegression().fit(X_side_width, y_side_width)
+line_side_width = model_side_width.predict(X_side_width)
 
-# Menampilkan koefisien dan intercept untuk lebar
-slope_width = model_width.coef_[0]
-intercept_width = model_width.intercept_
-print(f'Persamaan regresi lebar badan: lebar(cm) = {slope_width:.2f} * piksel + {intercept_width:.2f}')
+plt.figure(figsize=(20, 10))
 
-# Plot hasil regresi untuk tinggi badan
-plt.figure(figsize=(12, 6))
-
-plt.subplot(1, 2, 1)
-plt.scatter(df['height_pixels'], df['real_height_cm'], color='black', label='Data')
-plt.plot(df['height_pixels'], line_height, color='blue', label='Regresi Linear')
+plt.subplot(2, 2, 1)
+plt.scatter(height_pixels, height_real, color='black', label='Tinggi Rata-rata (pixel) vs Tinggi Real (cm)')
+plt.scatter(height_pixels, height_system, facecolors='white', edgecolors='black', label='Tinggi Rata-rata (pixel) vs Tinggi Sistem (cm)')
+plt.plot(height_pixels, line_height, color='blue', label='Regresi Linear')
 plt.xlabel('Tinggi (piksel)')
 plt.ylabel('Tinggi (cm)')
-plt.title('Regresi Linear untuk Tinggi Badan')
+plt.title('Grafik Regresi Linear Tinggi Badan')
 plt.legend()
 plt.grid(True)
 
-# Plot hasil regresi untuk lebar
-plt.subplot(1, 2, 2)
-plt.scatter(df['width_pixels'], df['real_width_cm'], color='black', label='Data')
-plt.plot(df['width_pixels'], line_width, color='red', label='Regresi Linear')
-plt.xlabel('Lebar (piksel)')
-plt.ylabel('Lebar (cm)')
-plt.title('Regresi Linear untuk Lebar Badan')
+plt.subplot(2, 2, 2)
+plt.scatter(front_width_pixels, front_width_real, color='black', label='Lebar Depan Rata-rata (pixel) vs Lebar Depan Real (cm)')
+plt.scatter(front_width_pixels, front_width_system, facecolors='white', edgecolors='black', label='Lebar Depan Rata-rata (pixel) vs Lebar Depan Sistem (cm)')
+plt.plot(front_width_pixels, line_front_width, color='blue', label='Regresi Linear')
+plt.xlabel('Lebar Depan (piksel)')
+plt.ylabel('Lebar Depan (cm)')
+plt.title('Grafik Regresi Linear Lebar Depan')
 plt.legend()
 plt.grid(True)
 
+plt.subplot(2, 2, 3)
+plt.scatter(side_width_pixels, side_width_real, color='black', label='Lebar Samping Rata-rata (pixel) vs Lebar Samping Real (cm)')
+plt.scatter(side_width_pixels, side_width_system, facecolors='white', edgecolors='black', label='Lebar Samping Rata-rata (pixel) vs Lebar Samping Sistem (cm)')
+plt.plot(side_width_pixels, line_side_width, color='blue', label='Regresi Linear')
+plt.xlabel('Lebar Samping (piksel)')
+plt.ylabel('Lebar Samping (cm)')
+plt.title('Grafik Regresi Linear Lebar Samping')
+plt.legend()
+plt.grid(True)
 
+plt.savefig('visualisation_regression.png')
 plt.tight_layout()
 plt.show()
